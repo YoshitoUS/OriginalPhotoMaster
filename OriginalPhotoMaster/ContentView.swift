@@ -12,7 +12,6 @@ struct ContentView: View {
     @State var selectedItem: PhotosPickerItem?
     @State var selectedImage: Image? = nil
     @State var text: String = ""
-    @State private var showAlert: Bool = false
     @State private var isShowingShareSheet = false
     @State private var sharedImage: UIImage? = nil
     @State private var cardcolor:Color = .white
@@ -64,7 +63,7 @@ struct ContentView: View {
                 .padding(.horizontal)
           
             Button {
-                isShowingShareSheet = true
+                shareImage(shouldShare: true)
             } label: {
                 HStack {
                     Text("共有する")
@@ -82,13 +81,12 @@ struct ContentView: View {
         .onChange(of: selectedItem, initial: true) {
             loadImage()
         }
-        .alert(isPresented: $showAlert) {
-            Alert(title: Text("保存完了"), message: Text("画像がフォトライブラリに保存されました。"), dismissButton: .default(Text("OK")))
-        }
         // シートとして表示
         .sheet(isPresented: $isShowingShareSheet) {
             if let image = sharedImage {
                 ShareSheet(activityItems: [image, "共有画像"])
+            } else {
+                Text("共有できる画像がありません")
             }
         }
     }
@@ -148,18 +146,27 @@ struct ContentView: View {
         }
     }
     
-    private func saveEditedImage() {
+    private func shareImage(shouldShare: Bool = false) {
         let renderer = ImageRenderer(content: imageWithFrame)
         renderer.scale = 3
-        
+
         if let uiImage = renderer.uiImage {
             UIImageWriteToSavedPhotosAlbum(uiImage, nil, nil, nil)
-            showAlert = true
+
+            // 共有用に保持
+            if shouldShare {
+                sharedImage = uiImage
+                isShowingShareSheet = true
+            }
+
             selectedImage = nil
             selectedItem = nil
             text = ""
+        } else {
+            print("renderer.uiImage が nil です")
         }
     }
+
 }
 
 #Preview {
