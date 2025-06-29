@@ -153,7 +153,6 @@ struct ContentView: View {
         renderer.scale = 3
 
         if let uiImage = renderer.uiImage {
-            UIImageWriteToSavedPhotosAlbum(uiImage, nil, nil, nil)
 
             // 共有用に保持
             if shouldShare {
