@@ -23,36 +23,38 @@ struct ContentView: View {
                 Button(action: {
                     cardcolor = .white
                 }){
-                    
+                    Circle()
+                        .fill(Color.white)
+                        .frame(width: 48, height: 48)
+                        .overlay(
+                            Circle()
+                                .stroke(Color.black, lineWidth: 2)
+                        )
                 }
-                .fontWeight(.semibold)
-                .frame(width: 48, height: 48)
-                .background(Color(.white))
-                .cornerRadius(24)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 24)
-                        .stroke(Color.black, lineWidth: 2)
-                )
                 
                 Button(action: {
                     cardcolor = .pink
                 }) {
-                        
+                    Circle()
+                        .fill(Color.pink)
+                        .frame(width: 48, height: 48)
+                        .overlay(
+                            Circle()
+                                .stroke(Color.black, lineWidth: 2)
+                        )
                 }
-                .fontWeight(.semibold)
-                .frame(width: 48, height: 48)
-                .background(Color(.pink))
-                .cornerRadius(24)
                 
                 Button(action: {
                     cardcolor = .yellow
                 }) {
-                        
+                    Circle()
+                        .fill(Color.yellow)
+                        .frame(width: 48, height: 48)
+                        .overlay(
+                            Circle()
+                                .stroke(Color.black, lineWidth: 2)
+                        )
                 }
-                .fontWeight(.semibold)
-                .frame(width: 48, height: 48)
-                .background(Color(.yellow))
-                .cornerRadius(24)
             }
             .padding(.horizontal)
             
